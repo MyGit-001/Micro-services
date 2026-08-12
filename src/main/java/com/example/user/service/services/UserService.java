@@ -1,9 +1,11 @@
 package com.example.user.service.services;
 
 import com.example.user.service.entities.User;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface UserService {
 
     //create
