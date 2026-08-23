@@ -1,8 +1,7 @@
-package com.example.user.service.entities;
+package com.example.user.UserService.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.Length;
 
 import java.util.ArrayList;
 import java.util.List;

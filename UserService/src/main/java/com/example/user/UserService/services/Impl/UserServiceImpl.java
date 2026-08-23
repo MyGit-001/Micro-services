@@ -1,9 +1,9 @@
-package com.example.user.service.services.Impl;
+package com.example.user.UserService.services.Impl;
 
-import com.example.user.service.entities.User;
-import com.example.user.service.exceptions.ResourceNotFoundException;
-import com.example.user.service.repositories.UserRepository;
-import com.example.user.service.services.UserService;
+import com.example.user.UserService.entities.User;
+import com.example.user.UserService.exceptions.ResourceNotFoundException;
+import com.example.user.UserService.repositories.UserRepository;
+import com.example.user.UserService.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

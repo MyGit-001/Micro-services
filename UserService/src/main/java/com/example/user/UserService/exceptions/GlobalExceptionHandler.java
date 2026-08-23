@@ -1,6 +1,6 @@
-package com.example.user.service.exceptions;
+package com.example.user.UserService.exceptions;
 
-import com.example.user.service.payload.ApiResponse;
+import com.example.user.UserService.payload.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -1,6 +1,6 @@
-package com.example.user.service.services;
+package com.example.user.UserService.services;
 
-import com.example.user.service.entities.User;
+import com.example.user.UserService.entities.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

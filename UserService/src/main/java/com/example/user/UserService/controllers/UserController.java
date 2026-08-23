@@ -1,12 +1,9 @@
-package com.example.user.service.controllers;
+package com.example.user.UserService.controllers;
 
-import com.example.user.service.entities.User;
-import com.example.user.service.services.UserService;
-import org.apache.coyote.Response;
+import com.example.user.UserService.entities.User;
+import com.example.user.UserService.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
