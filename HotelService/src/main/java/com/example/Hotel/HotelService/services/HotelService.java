@@ -14,5 +14,5 @@ public interface HotelService {
     Hotel getHotel(String id);
 
     //get All
-    List<Hotel> getAll();
+    List<Hotel> getAllHotels();
 }

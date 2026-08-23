@@ -30,7 +30,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public List<Hotel> getAll() {
-        return List.of();
+    public List<Hotel> getAllHotels() {
+        return hotelRepository.findAll();
     }
 }
