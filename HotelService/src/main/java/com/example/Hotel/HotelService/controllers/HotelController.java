@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/hotels")
 public class HotelController {
@@ -25,7 +27,7 @@ public class HotelController {
     }
     //get all
     @GetMapping
-    public ResponseEntity<?> getAllHotels(){
-        return ResponseEntity.ok(hotelService.getAll());
+    public ResponseEntity<List<Hotel>> getAllHotels(){
+        return ResponseEntity.ok(hotelService.getAllHotels());
     }
 }
