@@ -14,7 +14,7 @@ Base URL: `http://localhost:8081`
 |---|---|
 | **Method** | `GET` |
 | **URL** | `http://localhost:8081/users/{userId}` |
-| **Status** | `200 OK` |
+| **Status** | `200 OK` / `404 Not Found` |
 
 **Request**
 
@@ -24,7 +24,7 @@ No request body. Pass `userId` as a path parameter.
 GET http://localhost:8081/users/1bef926f-62f7-4cd7-9119-e242092dda95
 ```
 
-**Response**
+**Response** — `200 OK`
 
 ```json
 {
@@ -33,6 +33,16 @@ GET http://localhost:8081/users/1bef926f-62f7-4cd7-9119-e242092dda95
   "email": "rishinegi@gmail.com",
   "about": "I am Software Engineer",
   "ratings": []
+}
+```
+
+**Error Response** — `404 Not Found`
+
+```json
+{
+  "message": "User not found with given ID",
+  "success": true,
+  "status": "NOT_FOUND"
 }
 ```
 
@@ -115,7 +125,7 @@ Base URL: `http://localhost:8082`
 |---|---|
 | **Method** | `GET` |
 | **URL** | `http://localhost:8082/hotels/{id}` |
-| **Status** | `200 OK` |
+| **Status** | `200 OK` / `404 Not Found` |
 
 **Request**
 
@@ -125,7 +135,7 @@ No request body. Pass `id` as a path parameter.
 GET http://localhost:8082/hotels/bb7abba5-2378-497a-8ff4-5886c646f007
 ```
 
-**Response**
+**Response** — `200 OK`
 
 ```json
 {
@@ -133,6 +143,16 @@ GET http://localhost:8082/hotels/bb7abba5-2378-497a-8ff4-5886c646f007
   "name": "Narmada",
   "location": "Karapakkam",
   "about": "Andhra Restaurant"
+}
+```
+
+**Error Response** — `404 Not Found`
+
+```json
+{
+  "success": false,
+  "message": "Hotel Not found By ID",
+  "status": "404 NOT_FOUND"
 }
 ```
 
