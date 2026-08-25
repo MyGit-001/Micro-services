@@ -1,9 +1,11 @@
 package com.example.rating.RatingService.services;
 
 import com.example.rating.RatingService.entities.Rating;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface RatingService {
 
     // create
