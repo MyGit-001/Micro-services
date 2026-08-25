@@ -1,28 +1,33 @@
 package com.example.rating.RatingService.services.Impl;
 
 import com.example.rating.RatingService.entities.Rating;
+import com.example.rating.RatingService.repositories.RatingRepository;
 import com.example.rating.RatingService.services.RatingService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class RatingServiceImpl implements RatingService {
+    @Autowired
+    RatingRepository repository;
+
     @Override
     public Rating create(Rating rating) {
-        return null;
+        return repository.save(rating);
     }
 
     @Override
     public List<Rating> getRatings() {
-        return List.of();
+        return repository.findAll();
     }
 
     @Override
     public List<Rating> getRatingByUserId(String userId) {
-        return List.of();
+        return repository.findByUserId(userId);
     }
 
     @Override
     public List<Rating> getRatingByHotelId(String hotelId) {
-        return List.of();
+        return repository.findByHotelId(hotelId);
     }
 }
