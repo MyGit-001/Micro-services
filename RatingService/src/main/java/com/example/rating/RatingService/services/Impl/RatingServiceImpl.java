@@ -4,9 +4,11 @@ import com.example.rating.RatingService.entities.Rating;
 import com.example.rating.RatingService.repositories.RatingRepository;
 import com.example.rating.RatingService.services.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RatingServiceImpl implements RatingService {
     @Autowired
     RatingRepository repository;
