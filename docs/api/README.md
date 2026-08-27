@@ -1,6 +1,6 @@
 # Microservices API Documentation
 
-This document contains Postman-tested API endpoints for the **UserService** and **HotelService** microservices.
+This document contains Postman-tested API endpoints for the **UserService**, **HotelService**, and **RatingService** microservices.
 
 ---
 
@@ -222,8 +222,159 @@ No request body or parameters required.
 
 ---
 
+## 📌 RatingService
+
+Base URL: `http://localhost:8083`
+
+### 1. Create Rating
+
+| | |
+|---|---|
+| **Method** | `POST` |
+| **URL** | `http://localhost:8083/ratings` |
+| **Status** | `201 Created` |
+
+**Request**
+
+```json
+{
+  "userId": "d10e674b-d4cf-45fe-b0b9-c59ab43f4171",
+  "hotelId": "9bc053c2-cdd2-4d01-82f6-8d835f547cb7",
+  "rating": 8,
+  "feedback": "Serving size not as per price but that compensates in teh tastes"
+}
+```
+
+**Response**
+
+```json
+{
+  "ratingId": "6a9074bd1a9fb6c37c23c04a",
+  "userId": "d10e674b-d4cf-45fe-b0b9-c59ab43f4171",
+  "hotelId": "9bc053c2-cdd2-4d01-82f6-8d835f547cb7",
+  "rating": 8,
+  "feedback": "Serving size not as per price but that compensates in teh tastes"
+}
+```
+
+---
+
+### 2. Get Ratings By User
+
+| | |
+|---|---|
+| **Method** | `GET` |
+| **URL** | `http://localhost:8083/ratings/users/{userId}` |
+| **Status** | `200 OK` |
+
+**Request**
+
+No request body. Pass `userId` as a path parameter.
+
+```
+GET http://localhost:8083/ratings/users/1bef926f-62f7-4cd7-9119-e242092dda95
+```
+
+**Response**
+
+```json
+[
+  {
+    "ratingId": "6a8df7ad1a9fb6c37c23c048",
+    "userId": "1bef926f-62f7-4cd7-9119-e242092dda95",
+    "hotelId": "9bc053c2-cdd2-4d01-82f6-8d835f547cb7",
+    "rating": 8,
+    "feedback": "Variety of North food"
+  },
+  {
+    "ratingId": "6a8df8661a9fb6c37c23c049",
+    "userId": "1bef926f-62f7-4cd7-9119-e242092dda95",
+    "hotelId": "bb7abba5-2378-497a-8ff4-5886c646f007",
+    "rating": 7,
+    "feedback": "Great Service & Hospitality"
+  }
+]
+```
+
+---
+
+### 3. Get Ratings By Hotel
+
+| | |
+|---|---|
+| **Method** | `GET` |
+| **URL** | `http://localhost:8083/ratings/hotels/{hotelId}` |
+| **Status** | `200 OK` |
+
+**Request**
+
+No request body. Pass `hotelId` as a path parameter.
+
+```
+GET http://localhost:8083/ratings/hotels/bb7abba5-2378-497a-8ff4-5886c646f007
+```
+
+**Response**
+
+```json
+[
+  {
+    "ratingId": "6a8df8661a9fb6c37c23c049",
+    "userId": "1bef926f-62f7-4cd7-9119-e242092dda95",
+    "hotelId": "bb7abba5-2378-497a-8ff4-5886c646f007",
+    "rating": 7,
+    "feedback": "Great Service & Hospitality"
+  }
+]
+```
+
+---
+
+### 4. Get All Ratings
+
+| | |
+|---|---|
+| **Method** | `GET` |
+| **URL** | `http://localhost:8083/ratings` |
+| **Status** | `200 OK` |
+
+**Request**
+
+No request body or parameters required.
+
+**Response**
+
+```json
+[
+  {
+    "ratingId": "6a8df7ad1a9fb6c37c23c048",
+    "userId": "1bef926f-62f7-4cd7-9119-e242092dda95",
+    "hotelId": "9bc053c2-cdd2-4d01-82f6-8d835f547cb7",
+    "rating": 8,
+    "feedback": "Variety of North food"
+  },
+  {
+    "ratingId": "6a8df8661a9fb6c37c23c049",
+    "userId": "1bef926f-62f7-4cd7-9119-e242092dda95",
+    "hotelId": "bb7abba5-2378-497a-8ff4-5886c646f007",
+    "rating": 7,
+    "feedback": "Great Service & Hospitality"
+  },
+  {
+    "ratingId": "6a9074bd1a9fb6c37c23c04a",
+    "userId": "d10e674b-d4cf-45fe-b0b9-c59ab43f4171",
+    "hotelId": "9bc053c2-cdd2-4d01-82f6-8d835f547cb7",
+    "rating": 8,
+    "feedback": "Serving size not as per price but that compensates in teh tastes"
+  }
+]
+```
+
+---
+
 ## Tech Notes
 
-- Both services expose REST APIs and were tested via Postman.
+- All three services expose REST APIs and were tested via Postman.
 - `UserService` runs on port **8081**.
 - `HotelService` runs on port **8082**.
+- `RatingService` runs on port **8083**.
