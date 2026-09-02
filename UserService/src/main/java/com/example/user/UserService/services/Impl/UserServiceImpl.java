@@ -4,6 +4,7 @@ import com.example.user.UserService.entities.Hotel;
 import com.example.user.UserService.entities.Rating;
 import com.example.user.UserService.entities.User;
 import com.example.user.UserService.exceptions.ResourceNotFoundException;
+import com.example.user.UserService.external.HotelService;
 import com.example.user.UserService.repositories.UserRepository;
 import com.example.user.UserService.services.UserService;
 import org.slf4j.Logger;
@@ -28,6 +29,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private HotelService hotelService;
+
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
@@ -51,7 +55,7 @@ public class UserServiceImpl implements UserService {
         //http://localhost:8083/ratings/users/1bef926f-62f7-4cd7-9119-e242092dda95
 
         Rating[] ratingOfUser = restTemplate.getForObject(
-                "http://RatingService/ratings/users/"+user.getUserId(), Rating[].class);
+                "http://localhost:8083/ratings/users/"+user.getUserId(), Rating[].class);
         logger.info("Response from RATING-SERVICE: {}", ratingOfUser);
 
         //converting Array to List
@@ -64,8 +68,12 @@ public class UserServiceImpl implements UserService {
             System.out.println("rating.getHotelId()");
             ResponseEntity<Hotel> hotelResponseEntity = restTemplate.getForEntity(
                     "http://HotelService/hotels/"+rating.getHotelId(), Hotel.class);
+
             Hotel hotel = hotelResponseEntity.getBody();
             logger.info("Response status code: {}", hotelResponseEntity.getStatusCode());
+
+            //Using Feign Client to call Hotel Service
+            //Hotel hotel = hotelService.getHotel(rating.getHotelId());
 
             //set the hotel to rating
             rating.setHotel(hotel);
