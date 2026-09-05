@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
         //http://localhost:8083/ratings/users/1bef926f-62f7-4cd7-9119-e242092dda95
 
         Rating[] ratingOfUser = restTemplate.getForObject(
-                "http://localhost:8083/ratings/users/"+user.getUserId(), Rating[].class);
+                "http://RatingService/ratings/users/"+user.getUserId(), Rating[].class);
         logger.info("Response from RATING-SERVICE: {}", ratingOfUser);
 
         //converting Array to List
@@ -65,15 +65,15 @@ public class UserServiceImpl implements UserService {
             //api call to hotel service to get the hotel
             //http://localhost:8082/hotels/bb7abba5-2378-497a-8ff4-5886c646f007
 
-            System.out.println("rating.getHotelId()");
-            ResponseEntity<Hotel> hotelResponseEntity = restTemplate.getForEntity(
-                    "http://HotelService/hotels/"+rating.getHotelId(), Hotel.class);
-
-            Hotel hotel = hotelResponseEntity.getBody();
-            logger.info("Response status code: {}", hotelResponseEntity.getStatusCode());
+//            System.out.println("rating.getHotelId()");
+//            ResponseEntity<Hotel> hotelResponseEntity = restTemplate.getForEntity(
+//                    "http://HotelService/hotels/"+rating.getHotelId(), Hotel.class);
+//
+//            Hotel hotel = hotelResponseEntity.getBody();
+//            logger.info("Response status code: {}", hotelResponseEntity.getStatusCode());
 
             //Using Feign Client to call Hotel Service
-            //Hotel hotel = hotelService.getHotel(rating.getHotelId());
+            Hotel hotel = hotelService.getHotel(rating.getHotelId());
 
             //set the hotel to rating
             rating.setHotel(hotel);
