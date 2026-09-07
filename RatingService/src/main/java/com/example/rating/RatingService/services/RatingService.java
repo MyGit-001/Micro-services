@@ -22,4 +22,7 @@ public interface RatingService {
 
     // get all ratings by hotelId
     List<Rating> getRatingByHotelId(String hotelId);
+
+    //Delete rating
+    void deleteRating(String ratingId);
 }
