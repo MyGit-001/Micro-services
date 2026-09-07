@@ -32,4 +32,10 @@ public class RatingServiceImpl implements RatingService {
     public List<Rating> getRatingByHotelId(String hotelId) {
         return repository.findByHotelId(hotelId);
     }
+
+    @Override
+    public void deleteRating(String ratingId) {
+        repository.deleteById(ratingId);
+        System.out.println("Rating deleted with ID: " + ratingId);
+    }
 }
