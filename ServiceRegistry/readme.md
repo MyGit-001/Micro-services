@@ -309,3 +309,63 @@ No Annotation Required
 ## Key Interview Takeaway
 
 > `@EnableEurekaClient` is Eureka-specific, `@EnableDiscoveryClient` is vendor-neutral, and in modern Spring Cloud projects both are usually unnecessary because Spring automatically configures the appropriate discovery client based on the dependencies present on the classpath.
+
+# Eureka Configuration — Registry Server & Registry Client
+
+This document explains the `application.yaml` configuration used to set up **Netflix Eureka** as a service discovery server, and how client microservices register themselves with it.
+
+---
+
+## 1. Registry Server (`ServiceRegistry` / Eureka Server)
+
+```yaml
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+```
+
+| Property | Meaning |
+|---|---|
+| `eureka.instance.hostname` | The hostname this Eureka server instance identifies itself as. Set to `localhost` for local development — in a real multi-server/cloud setup, this would be the server's actual reachable hostname. |
+| `eureka.client.register-with-eureka` | Set to `false` because the **server itself should not register as a client with itself**. By default, every Eureka node is also a Eureka client (useful for peer-to-peer replication between multiple Eureka servers). Since this is a single, standalone registry, self-registration is disabled. |
+| `eureka.client.fetch-registry` | Set to `false` for the same reason — the server doesn't need to *fetch* a copy of the service registry from itself. This is normally used by Eureka servers to replicate registry data from peer servers; not needed in a single-node setup. |
+
+**In short:** this configuration tells this application *"you are the Eureka server — don't try to act like a client too."* Without disabling these, a standalone Eureka server would try to register itself as a service instance, which is unnecessary noise.
+
+---
+
+## 2. Registry Client (any microservice — e.g. UserService, HotelService, RatingService)
+
+```yaml
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+```
+
+| Property | Meaning |
+|---|---|
+| `eureka.instance.prefer-ip-address` | When `true`, the service registers itself in Eureka using its **IP address** instead of its hostname. This matters in containerized/cloud environments (Docker, Kubernetes) where hostnames are often not resolvable across the network, but IPs are. Even locally, this avoids DNS resolution issues. |
+| `eureka.client.fetch-registry` | Set to `true` — this service **pulls down the full registry** of all other registered services from the Eureka server, and caches it locally. This is what allows load-balanced calls (e.g. via `@LoadBalanced RestTemplate` or Feign) to resolve a service name like `HotelService` to an actual host:port. |
+| `eureka.client.register-with-eureka` | Set to `true` — this service **announces itself** to the Eureka server so other services can discover and call it. |
+| `eureka.client.service-url.defaultZone` | The URL of the Eureka server this client should register with and fetch the registry from. `http://localhost:8761/eureka` is the default Eureka server endpoint (port `8761` is Eureka's conventional default port). |
+
+**In short:** every business microservice needs both `fetch-registry` and `register-with-eureka` set to `true` — it needs to **announce itself** (so others can find it) and **discover others** (so it can call them).
+
+---
+
+## Summary — Server vs Client at a glance
+
+| | Registry Server | Registry Client |
+|---|---|---|
+| Registers itself with Eureka? | ❌ `false` | ✅ `true` |
+| Fetches the registry? | ❌ `false` | ✅ `true` |
+| Points to a `defaultZone`? | Not needed (it *is* the zone) | ✅ Required — points to the server |
+| Purpose | Hosts the service registry | Registers itself + discovers other services |
